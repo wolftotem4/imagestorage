@@ -29,10 +29,10 @@
         "laravel": {
             "providers": [
                 "WTotem\\ImageStorage\\ImageStorageProvider"
-            ]
-        },
-        "aliases": {
-            "ImageStorage": "WTotem\\ImageStorage\\Facades\\ImageStorage"
+            ],
+            "aliases": {
+                "ImageStorage": "WTotem\\ImageStorage\\Facades\\ImageStorage"
+            }
         }
     }
 }
