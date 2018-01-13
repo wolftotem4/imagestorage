@@ -88,7 +88,7 @@ class ImageStorageManager
     }
 
     /**
-     * @param  string|null $driver
+     * @param  string  $driver
      * @return string
      */
     public function getConfig($driver = null)
