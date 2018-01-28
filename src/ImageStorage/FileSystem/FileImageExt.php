@@ -1,6 +1,6 @@
 <?php
 
-namespace WTotem\ImageStorage\ImageExt;
+namespace WTotem\ImageStorage\FileSystem;
 
 use WTotem\ImageStorage\Image;
 use Illuminate\Database\Eloquent\Model;

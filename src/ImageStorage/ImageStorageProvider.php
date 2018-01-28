@@ -2,8 +2,8 @@
 
 namespace WTotem\ImageStorage;
 
-use WTotem\ImageStorage\ImageExt\FileImageExt;
-use WTotem\ImageStorage\System\FileSystem;
+use WTotem\ImageStorage\FileSystem\FileImageExt;
+use WTotem\ImageStorage\FileSystem\FileSystem;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -44,6 +44,7 @@ class ImageStorageProvider extends ServiceProvider
         $this->app->singleton(ImageFileHandler::class);
 
         $this->registerModelHandler();
+        $this->registerImageStorageResolver();
     }
 
     /**
@@ -64,6 +65,14 @@ class ImageStorageProvider extends ServiceProvider
 
         $this->app->singleton('imagestorage.fileimageext', function () {
             return new FileImageExt();
+        });
+    }
+
+    protected function registerImageStorageResolver()
+    {
+        Image::setStorageHandlerResolver(function ($image) {
+            $manager = $this->app->make(ImageStorageManager::class);
+            return $manager->system($image->driver)->getStorageHandler($image);
         });
     }
 

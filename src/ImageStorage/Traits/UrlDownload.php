@@ -10,7 +10,7 @@ trait UrlDownload
 {
     /**
      * @param  string  $url
-     * @return \WTotem\ImageStorage\ImageEntity\FileImageEntity
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
      *
      * @throws \WTotem\ImageStorage\Exceptions\NotValidImageStorageException
      * @throws \WTotem\ImageStorage\Exceptions\InvalidUrlSourceException

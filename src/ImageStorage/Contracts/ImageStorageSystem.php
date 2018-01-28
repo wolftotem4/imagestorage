@@ -24,7 +24,7 @@ abstract class ImageStorageSystem
     /**
      * @param  string  $file
      * @param  string  $filename
-     * @return \WTotem\ImageStorage\ImageEntity\FileImageEntity
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
      *
      * @throws \WTotem\ImageStorage\Exceptions\NotValidImageStorageException
      */
@@ -32,7 +32,7 @@ abstract class ImageStorageSystem
 
     /**
      * @param  string
-     * @return \WTotem\ImageStorage\ImageEntity\FileImageEntity
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
      *
      * @throws \WTotem\ImageStorage\Exceptions\NotValidImageStorageException
      * @throws \WTotem\ImageStorage\Exceptions\InvalidUrlSourceException
@@ -40,13 +40,21 @@ abstract class ImageStorageSystem
     abstract public function fromUrl($url);
 
     /**
+     * @param  \WTotem\ImageStorage\Image  $image
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
+     */
+    abstract public function getStorageHandler(Image $image);
+
+    /**
+     * @param  string  $driver
      * @param  \WTotem\ImageStorage\ImageFileInfo  $file
      * @param  string  $filename
      * @return \WTotem\ImageStorage\Image
      */
-    protected function createImage(ImageFileInfo $file, $filename = null)
+    protected function createImage($driver, ImageFileInfo $file, $filename = null)
     {
         return $this->imageModel()->newInstance([
+            'driver'   => $driver,
             'filesize' => $file->getSize(),
             'filename' => $filename ?: $file->getFilename(),
             'mime'     => $this->normalizeMimeType($file->handler()->mime()),

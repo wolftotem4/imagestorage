@@ -8,8 +8,8 @@ use InvalidArgumentException;
 
 /**
  * @method string type()
- * @method \WTotem\ImageStorage\ImageEntity\FileImageEntity createFromFile(string $file, string $filename = null)
- * @method \WTotem\ImageStorage\ImageEntity\FileImageEntity fromUrl(string $url)
+ * @method FileSystem\FileImageEntity createFromFile(string $file, string $filename = null)
+ * @method FileSystem\FileImageEntity fromUrl(string $url)
  */
 
 class ImageStorageManager

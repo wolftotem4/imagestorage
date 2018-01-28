@@ -1,7 +1,9 @@
 <?php
 
-namespace WTotem\ImageStorage\ImageEntity;
+namespace WTotem\ImageStorage\FileSystem;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WTotem\ImageStorage\Contracts\ImageEntity;
 use WTotem\ImageStorage\ImageFile;
 
@@ -43,5 +45,24 @@ class FileImageEntity implements ImageEntity
     public function getFilename()
     {
         return $this->file->getFilename();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function showImageResponse()
+    {
+        if (! $this->file->file()->isFile()) {
+            throw new NotFoundHttpException();
+        }
+
+        $realpath = $this->file->file()->getRealPath();
+        $headers = [
+            'Content-Type' => $this->image()->mime,
+        ];
+
+        return new BinaryFileResponse($realpath, 200, $headers);
     }
 }

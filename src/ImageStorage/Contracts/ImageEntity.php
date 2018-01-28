@@ -18,4 +18,9 @@ interface ImageEntity
      * @return \Intervention\Image\Image
      */
     public function handler();
+
+    /**
+     * @return mixed
+     */
+    public function showImageResponse();
 }

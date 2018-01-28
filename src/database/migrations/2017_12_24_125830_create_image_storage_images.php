@@ -17,6 +17,7 @@ class CreateImageStorageImages extends Migration
             $table->increments('id');
             $table->unsignedInteger('ext_id');
             $table->string('ext_type');
+            $table->string('driver');
             $table->unsignedInteger('filesize');
             $table->string('filename');
             $table->string('mime', 20);

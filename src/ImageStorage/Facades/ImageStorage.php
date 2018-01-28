@@ -12,8 +12,8 @@ use WTotem\ImageStorage\ImageStorageManager;
  * @method static string getConfig(string $driver = null)
  *
  * @method static string type()
- * @method static \WTotem\ImageStorage\ImageEntity\FileImageEntity createFromFile(string $file, string $filename = null)
- * @method static \WTotem\ImageStorage\ImageEntity\FileImageEntity fromUrl(string $url)
+ * @method static \WTotem\ImageStorage\FileSystem\FileImageEntity createFromFile(string $file, string $filename = null)
+ * @method static \WTotem\ImageStorage\FileSystem\FileImageEntity fromUrl(string $url)
  */
 
 class ImageStorage extends Facade

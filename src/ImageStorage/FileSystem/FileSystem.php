@@ -1,9 +1,9 @@
 <?php
 
-namespace WTotem\ImageStorage\System;
+namespace WTotem\ImageStorage\FileSystem;
 
 use WTotem\ImageStorage\Contracts\ImageStorageSystem;
-use WTotem\ImageStorage\ImageEntity\FileImageEntity;
+use WTotem\ImageStorage\Image;
 use WTotem\ImageStorage\ImageFile;
 use WTotem\ImageStorage\ImageFileHandler;
 use WTotem\ImageStorage\ImageFileInfo;
@@ -22,7 +22,7 @@ class FileSystem extends ImageStorageSystem
     }
 
     /**
-     * @return \WTotem\ImageStorage\ImageExt\FileImageExt
+     * @return \WTotem\ImageStorage\FileSystem\FileImageExt
      */
     protected function fileImageExt()
     {
@@ -32,7 +32,7 @@ class FileSystem extends ImageStorageSystem
     /**
      * @param  string  $file
      * @param  string  $filename
-     * @return \WTotem\ImageStorage\ImageEntity\FileImageEntity
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
      *
      * @throws \WTotem\ImageStorage\Exceptions\NotValidImageStorageException
      */
@@ -49,6 +49,18 @@ class FileSystem extends ImageStorageSystem
         $imageFile = new ImageFile($image, $target['file']);
 
         return new FileImageEntity($imageFile);
+    }
+
+    /**
+     * @param  \WTotem\ImageStorage\Image  $image
+     * @return \WTotem\ImageStorage\Contracts\ImageEntity
+     */
+    public function getStorageHandler(Image $image)
+    {
+        $file       = new ImageFileInfo($this->storagePath($image->ext->hashname), false);
+        $imageFile  = new ImageFile($image, $file);
+        $entity     = new FileImageEntity($imageFile);
+        return $entity;
     }
 
     /**
@@ -81,7 +93,7 @@ class FileSystem extends ImageStorageSystem
      */
     protected function saveImage(ImageFileInfo $file, $filename, $hashname)
     {
-        $image = $this->createImage($file, $filename);
+        $image = $this->createImage($driver = 'file', $file, $filename);
         ($ext = $this->fileImageExt()->newInstance(compact('hashname')))->save();
         $ext->image()->save($image);
         return $image;
